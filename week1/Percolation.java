@@ -4,7 +4,7 @@ import java.util.ListIterator;
 public class Percolation {
   private int N;
   private boolean[][] Grid;
-  private WeightedQuickUnionUF QF;
+  private WeightedQuickUnionUF UF;
   private boolean isPercolate;
 
   public Percolation(int N) {
