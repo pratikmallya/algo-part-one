@@ -24,6 +24,7 @@ public class PercolationStats {
         };
         // open closed site
         perc.open(x, y);
+        numOpen++;
         // if the system does not percolate, continue
         if (!perc.percolates()) {
           continue;
@@ -62,6 +63,6 @@ public class PercolationStats {
       throw new java.lang.IllegalArgumentException("Program accepts only 2 input arguments");
     };
     PercolationStats percStats = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-    System.out.printf("mean = %f\nstddev = %f\n95% confidence interval = %f, %f", percStats.mean(), percStats.stddev(), percStats.confidencelo(), percStats.confidencehi());
+    System.out.printf("mean = %f\nstddev = %f\n95%% confidence interval = %f, %f\n", percStats.mean(), percStats.stddev(), percStats.confidencelo(), percStats.confidencehi());
   }
 }
