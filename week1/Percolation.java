@@ -1,5 +1,4 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-import java.util.ListIterator;
 
 public class Percolation {
   private int N;
@@ -58,7 +57,7 @@ public class Percolation {
       return false;
     }
     // check if the component that this site belongs to is open
-    int[] compIndex = this.expandDimension(this.UF.find(this.collapseDimension(i, j)-1) + 1);
+    int[] compIndex = this.expandDimension(this.UF.find(this.collapseDimension(i, j)-1));
     return this.isOpen(compIndex[0], compIndex[1]);
   };
 
@@ -69,12 +68,14 @@ public class Percolation {
   public static void main(String [] args){};
 
   private int collapseDimension(int i, int j) {
+  // result in range [1, N*N]
     return (i-1)*this.N + j;
   }
 
   private int[] expandDimension(int U) {
+    // result in range [(1,1), (N, N)]
     int i = U/(this.N + 1) + 1;
-    int j = (U - this.N * (U/this.N)) + 1; // must NOT use i since its been adjusted for 1-based array
+    int j = (U - this.N * (U/this.N)) + 1;
     int[] retarr = {i, j};
     return retarr;
   }

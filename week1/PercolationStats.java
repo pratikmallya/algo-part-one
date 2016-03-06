@@ -1,5 +1,7 @@
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class PercolationStats {
   private double[] expResults;
@@ -14,24 +16,23 @@ public class PercolationStats {
     for (int i=0; i<T; i++) {
       int numOpen = 0;
       Percolation perc = new Percolation(N);
-      while (!perc.percolates()) {
-        // generate random site
-        int x = StdRandom.uniform(1, N+1);
-        int y = StdRandom.uniform(1, N+1);
-        // if not closed site, continue
-        if (perc.isOpen(x, y)) {
-          continue;
-        };
+      // generate lookup array
+      Integer[] lookup = new Integer[N*N];
+      for (int j=0; j < N*N; j++) {
+        lookup[j] = j;
+      }
+      Collections.shuffle(Arrays.asList(lookup));
+      for (int j=0; j < N*N; j++) {
+        // get the coordinates of the site
+        int[] compIndex = this.expandDimension(lookup[j], N);
         // open closed site
-        perc.open(x, y);
+        perc.open(compIndex[0], compIndex[1]);
         numOpen++;
-        // if the system does not percolate, continue
-        if (!perc.percolates()) {
-          continue;
+        // if the system percolates, record stats and exit
+        if (perc.percolates()) {
+          this.expResults[i] = (double) numOpen / (N*N);
+          break;
         }
-        // the system does percolate, record statistics and run the next experiment
-        this.expResults[i] = (double) numOpen / (N*N);
-        break;
       }
     }
   };
@@ -58,11 +59,20 @@ public class PercolationStats {
     double sigma = this.stddev();
     return mu + ((1.96 * sigma)/Math.sqrt(this.expResults.length));
   };
+
   public static void main(String[] args) {
     if (args.length != 2) {
       throw new java.lang.IllegalArgumentException("Program accepts only 2 input arguments");
     };
     PercolationStats percStats = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
     System.out.printf("mean = %f\nstddev = %f\n95%% confidence interval = %f, %f\n", percStats.mean(), percStats.stddev(), percStats.confidencelo(), percStats.confidencehi());
+  }
+
+  private int[] expandDimension(int U, int N) {
+    // result in range [(1,1), (N, N)]
+    int i = U/(N + 1) + 1;
+    int j = (U - N * (U/N)) + 1;
+    int[] retarr = {i, j};
+    return retarr;
   }
 }
