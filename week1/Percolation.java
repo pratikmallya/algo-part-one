@@ -26,16 +26,16 @@ public class Percolation {
     // open up the site
     this.Grid[i-1][j-1] = true;
     // update UF structure with neighbor information
-    int[] indexList = {-1, 1};
+    int[] indexList = {-1, 0, 1};
     for (int p : indexList){
       for(int q : indexList){
-        if (1 <= i+p && i+p<= this.N && 1 <= j+q && j+q <= this.N && this.isOpen(i+p, j+q)) {
+        if ( p != q && p != -q && 0 < i+p && i+p <= this.N && 0 < j+q && j+q <= this.N && this.isOpen(i+p, j+q)) {
           this.UF.union(this.collapseDimension(i,j)-1, this.collapseDimension(i+p,j+q)-1);
         }
       }
     }
-    // if the newly opened site is full, the system percolates
-    if (this.isFull(i, j)) {
+    // if the newly opened site is on the bottom row and is full, the system percolates
+    if (i == this.N && this.isFull(i, j)) {
       this.isPercolate = true;
     }
   };
@@ -53,6 +53,7 @@ public class Percolation {
       String msg = String.format("i and j must both lie in [1,%d], but got i=%d and j=%d", this.N, i, j);
       throw new java.lang.IndexOutOfBoundsException(msg);
     }
+    // if this is a closed site, cannot possibly be full
     if (!this.isOpen(i, j)) {
       return false;
     }

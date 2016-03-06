@@ -29,8 +29,8 @@ public class PercolationStats {
         if (!perc.percolates()) {
           continue;
         }
-        // the system does percolate, record statistics and exit
-        this.expResults[i] = (double) numOpen / (N*N - numOpen);
+        // the system does percolate, record statistics and run the next experiment
+        this.expResults[i] = (double) numOpen / (N*N);
         break;
       }
     }
