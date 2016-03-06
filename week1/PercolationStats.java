@@ -16,8 +16,8 @@ public class PercolationStats {
       Percolation perc = new Percolation(N);
       while (!perc.percolates()) {
         // generate random site
-        int x = StdRandom.uniform(N);
-        int y = StdRandom.uniform(N);
+        int x = StdRandom.uniform(1, N+1);
+        int y = StdRandom.uniform(1, N+1);
         // if not closed site, continue
         if (perc.isOpen(x, y)) {
           continue;
