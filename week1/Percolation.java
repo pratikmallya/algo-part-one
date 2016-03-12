@@ -83,11 +83,11 @@ public class Percolation {
       for(int j=1; j<N; j++) {
           int [] result = perc.expandDimension(perc.collapseDimension(i, j));
           if (i != result[0] && j != result[1]) {
-            System.out.println("expand/ collapse does not work");
+            System.out.printf("(%d, %d) Result = (%d, %d)\n", i, j, result[0], result[1]);
           }
       }
     }
-    System.out.println("All tests passed!");
+    System.out.println("Testing complete");
 
   };
 
@@ -98,7 +98,7 @@ public class Percolation {
 
   private int[] expandDimension(int U) {
     // result in range [(1,1), (N, N)]
-    int i = U/(this.N + 1) + 1;
+    int i = U/(this.N) + 1;
     int j = (U - this.N * (U/this.N)) + 1;
     int[] retarr = {i, j};
     return retarr;
