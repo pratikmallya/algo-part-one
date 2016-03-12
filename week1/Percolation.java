@@ -74,7 +74,22 @@ public class Percolation {
     return this.isPercolate;
   };
 
-  public static void main(String [] args){};
+  public static void main(String [] args){
+    int N = 100;
+    Percolation perc = new Percolation(N);
+    // test if collapse and expand dimension methods work correctly
+    System.out.println("Running tests.....");
+    for(int i=1; i<N; i++) {
+      for(int j=1; j<N; j++) {
+          int [] result = perc.expandDimension(perc.collapseDimension(i, j));
+          if (i != result[0] && j != result[1]) {
+            System.out.println("expand/ collapse does not work");
+          }
+      }
+    }
+    System.out.println("All tests passed!");
+
+  };
 
   private int collapseDimension(int i, int j) {
   // result in range [1, N*N]
