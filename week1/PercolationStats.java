@@ -3,6 +3,12 @@ import edu.princeton.cs.algs4.StdStats;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+* A class for experimenting with Percolation.
+* @param  N   size of the percolation grid
+* @param  T   no. of experiments
+*
+**/
 public class PercolationStats {
   private double[] expResults;
 
@@ -48,13 +54,13 @@ public class PercolationStats {
     return StdStats.stddev(this.expResults);
   }
 
-  public double confidencelo(){
+  public double confidenceLo(){
     double mu = this.mean();
     double sigma = this.stddev();
     return mu - ((1.96 * sigma)/Math.sqrt(this.expResults.length));
   };
 
-  public double confidencehi(){
+  public double confidenceHi(){
     double mu = this.mean();
     double sigma = this.stddev();
     return mu + ((1.96 * sigma)/Math.sqrt(this.expResults.length));
@@ -65,7 +71,7 @@ public class PercolationStats {
       throw new java.lang.IllegalArgumentException("Program accepts only 2 input arguments");
     };
     PercolationStats percStats = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-    System.out.printf("mean = %f\nstddev = %f\n95%% confidence interval = %f, %f\n", percStats.mean(), percStats.stddev(), percStats.confidencelo(), percStats.confidencehi());
+    System.out.printf("mean = %f\nstddev = %f\n95%% confidence interval = %f, %f\n", percStats.mean(), percStats.stddev(), percStats.confidenceLo(), percStats.confidenceHi());
   }
 
   private int[] expandDimension(int U, int N) {
